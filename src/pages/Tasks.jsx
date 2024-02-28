@@ -3,9 +3,11 @@ import MyTasks from '../components/tasks/MyTasks';
 import TaskCard from '../components/tasks/TaskCard';
 import {useState} from 'react';
 import AddTaskModal from './../components/tasks/AddTaskModal';
-
+import {useSelector} from 'react-redux'
 const Tasks = () => {
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(false);
+  const {tasks} = useSelector((state)=> state.tasksSlice);
+
   return (
     <div className="h-screen grid grid-cols-12">
       <div className="col-span-9 px-10 pt-10">
@@ -41,7 +43,10 @@ const Tasks = () => {
               </p>
             </div>
             <div className="space-y-3">
-              <TaskCard />
+              {tasks.map((task)=>(
+                <TaskCard key={task.id} task={task}/>
+              ))}
+              
             </div>
           </div>
           <div className="relative h-[800px] overflow-auto">
@@ -52,19 +57,23 @@ const Tasks = () => {
               </p>
             </div>
             <div className="space-y-3">
-              <TaskCard />
-              <TaskCard />
+            {tasks.map((task)=>(
+                <TaskCard key={task.id} task={task}/>
+              ))}
+             
             </div>
           </div>
           <div className="relative h-[800px] overflow-auto">
             <div className="flex sticky top-0 justify-between bg-[#D3DDF9] p-5 rounded-md mb-3">
-              <h1>Up Next</h1>
+              <h1>Completed Tasks</h1>
               <p className="bg-primary text-white w-6 h-6 grid place-content-center rounded-md">
                 0
               </p>
             </div>
             <div className="space-y-3">
-              <TaskCard />
+            {tasks.map((task)=>(
+                <TaskCard key={task.id} task={task}/>
+              ))}
               
             </div>
           </div>
